@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { ReactNode } from "react";
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Diginak.ai",
-  description: "Diginak.ai",
+  description: "Job-state driven freight workflow engine",
 };
 
 export default function RootLayout({
   children,
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -18,4 +16,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
