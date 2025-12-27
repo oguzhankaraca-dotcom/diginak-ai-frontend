@@ -1,15 +1,21 @@
+import type { Metadata } from "next";
+import { ReactNode } from "react";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Diginak.ai",
+  description: "Diginak.ai",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
+
