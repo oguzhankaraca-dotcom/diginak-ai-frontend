@@ -5,7 +5,11 @@ type Message = {
   text: string;
 };
 
-export default function Home() {
+export default function Home({
+  setHasJobs,
+}: {
+  setHasJobs: (v: boolean) => void;
+}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
@@ -16,6 +20,9 @@ export default function Home() {
       ...prev,
       { id: Date.now(), text: input },
     ]);
+
+    // 🔑 BU SATIR PHASE 2D’NİN KALBİ
+    setHasJobs(true);
 
     setInput("");
   }
@@ -52,7 +59,7 @@ export default function Home() {
         </div>
 
         <div className="chat-footer">
-          Phase 2A — local chat state only
+          Phase 2D — first user action creates Jobs folder
         </div>
       </div>
     </div>
