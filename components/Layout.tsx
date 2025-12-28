@@ -1,15 +1,20 @@
 import React from "react";
 import Sidebar from "./Sidebar";
-import type { Job } from "../types/job";
-import type { View } from "../types/view";
+import { Dispatch, SetStateAction } from "react";
+
+export type Job = {
+  id: number;
+  title: string;
+  status: "draft" | "quoted" | "booked";
+};
 
 type Props = {
   children: React.ReactNode;
   hasJobs: boolean;
-  activeView: View;
-  setActiveView: (v: View) => void;
+  activeView: "chat" | "jobs" | "job";
+  setActiveView: Dispatch<SetStateAction<"chat" | "jobs" | "job">>;
   jobs: Job[];
-  setActiveJob: (j: Job) => void;
+  setActiveJob: Dispatch<SetStateAction<Job | null>>;
   activeJob: Job | null;
 };
 
@@ -36,7 +41,9 @@ export default function Layout({
         {activeView === "jobs" && (
           <div>
             <h2>Jobs</h2>
+
             {jobs.length === 0 && <p>No jobs yet.</p>}
+
             {jobs.map((job) => (
               <div
                 key={job.id}
@@ -63,7 +70,7 @@ export default function Layout({
             <p>
               Status: <strong>{activeJob.status}</strong>
             </p>
-            <p>This job is currently in draft state.</p>
+            <p>This job is currently in {activeJob.status} state.</p>
           </div>
         )}
       </main>

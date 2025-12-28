@@ -1,7 +1,6 @@
-export type JobStatus = "draft";
-
-export type Job = {
-  id: number;
-  title: string;
-  status: JobStatus;
-};
+export type JobStatus =
+  | "draft"
+  | "quoted"
+  | "booked"
+  | "dispatched"
+  | "delivered";
