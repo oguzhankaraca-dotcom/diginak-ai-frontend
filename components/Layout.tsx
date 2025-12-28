@@ -17,6 +17,8 @@ type Props = {
   activeJob: Job | null;
 };
 
+const JOB_STATES = ["draft", "quoted", "booked"] as const;
+
 export default function Layout({
   children,
   hasJobs,
@@ -35,8 +37,10 @@ export default function Layout({
       />
 
       <main style={{ flex: 1, padding: 24 }}>
+        {/* CHAT */}
         {activeView === "chat" && children}
 
+        {/* JOB LIST */}
         {activeView === "jobs" && (
           <div>
             <h2>Jobs</h2>
@@ -63,13 +67,40 @@ export default function Layout({
           </div>
         )}
 
+        {/* JOB DETAIL */}
         {activeView === "job" && activeJob && (
           <div>
             <h2>{activeJob.title}</h2>
+
             <p>
               Status: <strong>{activeJob.status}</strong>
             </p>
-            <p>This job is currently in draft state.</p>
+
+            <div style={{ marginTop: 16 }}>
+              {JOB_STATES.map((state) => (
+                <button
+                  key={state}
+                  disabled={state === activeJob.status}
+                  style={{
+                    marginRight: 8,
+                    padding: "6px 12px",
+                    background:
+                      state === activeJob.status ? "#ddd" : "#f0f0f0",
+                    cursor:
+                      state === activeJob.status ? "default" : "pointer",
+                  }}
+                  onClick={() => {
+                    setActiveJob({ ...activeJob, status: state });
+                  }}
+                >
+                  → {state}
+                </button>
+              ))}
+            </div>
+
+            <p style={{ marginTop: 24, fontStyle: "italic" }}>
+              This job is currently managed locally (Phase 2G).
+            </p>
           </div>
         )}
       </main>
