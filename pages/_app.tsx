@@ -2,18 +2,17 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
 import { useState } from "react";
-
-export type Job = {
-  id: number;
-  title: string;
-  status: "draft";
-};
+import type { Job } from "../types/job";
+import type { View } from "../types/view";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const [hasJobs, setHasJobs] = useState(false);
-  const [activeView, setActiveView] = useState<"chat" | "jobs" | "job">("chat");
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [activeView, setActiveView] = useState<View>("chat");
+  const [jobs, setJobs] = useState<Job[]>([
+    { id: 1, title: "Test Job", status: "draft" },
+  ]);
   const [activeJob, setActiveJob] = useState<Job | null>(null);
+
+  const hasJobs = jobs.length > 0;
 
   return (
     <Layout
@@ -24,13 +23,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       setActiveJob={setActiveJob}
       activeJob={activeJob}
     >
-      <Component
-        {...pageProps}
-        setHasJobs={setHasJobs}
-        setActiveView={setActiveView}
-        setJobs={setJobs}
-        jobs={jobs}
-      />
+      <Component {...pageProps} />
     </Layout>
   );
 }
