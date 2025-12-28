@@ -1,9 +1,10 @@
 import React from "react";
+import { View } from "../types/view";
 
 type Props = {
   hasJobs: boolean;
-  activeView: string;
-  setActiveView: (v: string) => void;
+  activeView: View;
+  setActiveView: (v: View) => void;
 };
 
 export default function Sidebar({

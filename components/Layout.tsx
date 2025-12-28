@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "./Sidebar";
+import { View } from "../types/view";
 
 type Job = {
   id: number;
@@ -10,8 +11,8 @@ type Job = {
 type Props = {
   children: React.ReactNode;
   hasJobs: boolean;
-  activeView: string;
-  setActiveView: (v: string) => void;
+  activeView: View;
+  setActiveView: (v: View) => void;
   jobs: Job[];
   setActiveJob: (j: Job) => void;
   activeJob: Job | null;
@@ -37,10 +38,8 @@ export default function Layout({
       />
 
       <main style={{ flex: 1, padding: 24 }}>
-        {/* CHAT */}
         {activeView === "chat" && children}
 
-        {/* JOB LIST */}
         {activeView === "jobs" && (
           <div>
             <h2>Jobs</h2>
@@ -67,7 +66,6 @@ export default function Layout({
           </div>
         )}
 
-        {/* JOB DETAIL */}
         {activeView === "job" && activeJob && (
           <div>
             <h2>{activeJob.title}</h2>
@@ -97,10 +95,6 @@ export default function Layout({
                 </button>
               ))}
             </div>
-
-            <p style={{ marginTop: 24, fontStyle: "italic" }}>
-              This job is currently managed locally (Phase 2G).
-            </p>
           </div>
         )}
       </main>
