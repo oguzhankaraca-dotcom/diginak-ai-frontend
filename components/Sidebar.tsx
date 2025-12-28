@@ -1,7 +1,9 @@
+import React from "react";
+
 type Props = {
   hasJobs: boolean;
-  activeView: "chat" | "jobs";
-  setActiveView: (v: "chat" | "jobs") => void;
+  activeView: string;
+  setActiveView: (v: string) => void;
 };
 
 export default function Sidebar({
@@ -12,25 +14,13 @@ export default function Sidebar({
   return (
     <aside
       style={{
-        width: 240,
-        borderRight: "1px solid #eee",
+        width: 220,
+        borderRight: "1px solid #ddd",
         padding: 16,
-        background: "#fafafa",
       }}
     >
-      <button
-        style={{ width: "100%", marginBottom: 16 }}
-        onClick={() => setActiveView("chat")}
-      >
-        + New Chat
-      </button>
-
       <div
-        style={{
-          padding: "8px 0",
-          fontWeight: activeView === "chat" ? 600 : 400,
-          cursor: "pointer",
-        }}
+        style={{ marginBottom: 12, cursor: "pointer" }}
         onClick={() => setActiveView("chat")}
       >
         Chat
@@ -38,11 +28,7 @@ export default function Sidebar({
 
       {hasJobs && (
         <div
-          style={{
-            padding: "8px 0",
-            fontWeight: activeView === "jobs" ? 600 : 400,
-            cursor: "pointer",
-          }}
+          style={{ marginBottom: 12, cursor: "pointer" }}
           onClick={() => setActiveView("jobs")}
         >
           Jobs

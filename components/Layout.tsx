@@ -1,11 +1,20 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 
+type Job = {
+  id: number;
+  title: string;
+  status: string;
+};
+
 type Props = {
   children: React.ReactNode;
   hasJobs: boolean;
-  activeView: "chat" | "jobs";
-  setActiveView: (v: "chat" | "jobs") => void;
+  activeView: string;
+  setActiveView: (v: string) => void;
+  jobs: Job[];
+  setActiveJob: (j: Job) => void;
+  activeJob: Job | null;
 };
 
 export default function Layout({
@@ -13,6 +22,9 @@ export default function Layout({
   hasJobs,
   activeView,
   setActiveView,
+  jobs,
+  setActiveJob,
+  activeJob,
 }: Props) {
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
@@ -21,17 +33,46 @@ export default function Layout({
         activeView={activeView}
         setActiveView={setActiveView}
       />
-      <main style={{ flex: 1, padding: "24px" }}>
+
+      <main style={{ flex: 1, padding: 24 }}>
         {activeView === "chat" && children}
+
         {activeView === "jobs" && (
-          <div style={{ padding: 40 }}>
+          <div>
             <h2>Jobs</h2>
-            <p>No jobs yet.</p>
+
+            {jobs.length === 0 && <p>No jobs yet.</p>}
+
+            {jobs.map((job) => (
+              <div
+                key={job.id}
+                style={{
+                  padding: 12,
+                  border: "1px solid #ddd",
+                  marginBottom: 8,
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setActiveJob(job);
+                  setActiveView("job");
+                }}
+              >
+                {job.title} — <strong>{job.status}</strong>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeView === "job" && activeJob && (
+          <div>
+            <h2>{activeJob.title}</h2>
+            <p>
+              Status: <strong>{activeJob.status}</strong>
+            </p>
+            <p>This job is currently in draft state.</p>
           </div>
         )}
       </main>
     </div>
   );
 }
-
-

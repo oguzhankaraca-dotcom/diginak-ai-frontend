@@ -7,8 +7,12 @@ type Message = {
 
 export default function Home({
   setHasJobs,
+  setActiveView,
+  setJobs,
 }: {
   setHasJobs: (v: boolean) => void;
+  setActiveView: (v: "chat" | "jobs" | "job") => void;
+  setJobs: (j: any[]) => void;
 }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -16,14 +20,24 @@ export default function Home({
   function sendMessage() {
     if (!input.trim()) return;
 
+    // Chat message
     setMessages((prev) => [
       ...prev,
       { id: Date.now(), text: input },
     ]);
 
-    // 🔑 BU SATIR PHASE 2D’NİN KALBİ
+    // Fake Job creation
     setHasJobs(true);
+    setJobs([
+      {
+        id: 1,
+        title: "Job #1",
+        status: "draft",
+      },
+    ]);
 
+    // Go to Jobs view
+    setActiveView("jobs");
     setInput("");
   }
 
@@ -59,7 +73,7 @@ export default function Home({
         </div>
 
         <div className="chat-footer">
-          Phase 2D — first user action creates Jobs folder
+          Phase 2F — first draft job created
         </div>
       </div>
     </div>
